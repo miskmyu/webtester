@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE sqlMap      
+    PUBLIC "-//ibatis.apache.org//DTD SQL Map 2.0//EN"      
+    "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="Sconfig">
+
+  <!-- Use type aliases to avoid typing the full classname every time. -->
+  <typeAlias alias="SwoConfig" type="com.maninsoft.model.SwoConfig"/>
+
+  <!-- Result maps describe the mapping between the columns returned
+       from a query, and the class properties.  A result map isn't
+       necessary if the columns (or aliases) match to the properties 
+       exactly. -->
+  <resultMap id="SwoConfigResultMap" class="SwoConfig">
+    <result property="id" column="id"/>
+    <result property="logo" column="logo"/>
+  </resultMap>
+
+  <!-- Select with no parameters using the result map for Account class. -->
+  <select id="selectAllConfig" resultMap="SwoConfigResultMap">
+    select * from swconfig
+  </select>
+
+  <!-- A simpler select example without the result map.  Note the 
+       aliases to match the properties of the target result class. -->
+  <select id="selectConfigById" parameterClass="string" resultMap="SwoConfigResultMap">
+    select
+      id,
+      logo
+    from SWCONFIG
+    where id = #id#
+  </select>
+   
+  <!-- Insert example, using the Account parameter class -->
+  <insert id="insertConfig" parameterClass="SwoConfig">
+    insert into SWCONFIG (
+      id,
+      logo)
+    values (
+      #id#, #logo#
+    )
+  </insert>
+
+  <!-- Update example, using the Account parameter class -->
+  <update id="updateConfig" parameterClass="SwoConfig">
+    update SWCONFIG set
+      id = #id#,
+      logo = #logo#
+    where
+      id = #id#
+  </update>
+
+  <!-- Delete example, using an integer as the parameter class -->
+  <delete id="deleteConfigById" parameterClass="string">
+    delete from SWCONFIG where id = #id#
+  </delete>
+
+</sqlMap>
